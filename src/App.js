@@ -1,24 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import './LoginForm';
+import LoginForm from './LoginForm';
+import GeneralBackround from './GeneralBackround';
+import SignupForm from './SingupForm';
+import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
+import Shtusel from './Shtusel';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <GeneralBackround></GeneralBackround>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="login" element={<LoginForm />} />
+        <Route path="signup" element={<SignupForm />} />
+      </Routes>
     </div>
+
   );
 }
 
