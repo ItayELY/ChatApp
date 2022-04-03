@@ -7,7 +7,7 @@ import SignupForm from './SingupForm';
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import Shtusel from './Shtusel';
 
-//hello
+
 function App() {
   return (
     <div>
