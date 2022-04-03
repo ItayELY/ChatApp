@@ -6,6 +6,7 @@ import GeneralBackround from './GeneralBackround';
 import SignupForm from './SingupForm';
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import Shtusel from './Shtusel';
+import Chat from './Chat';
 
 //FEGAGAHRH
 //hello frghfrgh
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<LoginForm />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<SignupForm />} />
+        <Route path="chats" element={<Chat />} />
       </Routes>
     </div>
 
