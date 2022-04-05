@@ -19,7 +19,7 @@ function signUp() {
   
   console.log('users: ', usersList);
 
-}
+};
 
 function SignupForm() {
   

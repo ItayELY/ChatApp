@@ -6,7 +6,10 @@ import ChatMessage from "./ChatMessage";
 import usersList from "./users";
 import Message from "./Message";
 import { useState } from 'react';
+import connectedUserName from "./Globals";
 
+
+console.log('connectedUserName.userName: ', connectedUserName.userName);
 
 var currentUserName = "Itay";
 var currentContact = "Yonadav"
@@ -28,6 +31,7 @@ var contacts = [{
   timeSinceLastMessage: "2 mins",
   profileImagePath: "/profile.jpg"
 }]
+
 
 function Chat() {
   const [count, setCount] = useState(0);

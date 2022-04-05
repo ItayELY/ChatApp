@@ -1,9 +1,37 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
 import SignupForm from "./SingupForm";
 import { Link } from "react-router-dom";
+import usersList from "./users";
+import connectedUserName from "./Globals";
+
+function validiate() {
+  var usernameFromForm = document.getElementById("inputUsername").value;
+  var PasswordFromForm = document.getElementById("inputPassword").value;
+  console.log(' usernameFromForm: ',  usernameFromForm);
+  
+  //verification:
+  var currentUserObject = usersList.find(x => x.userName === usernameFromForm);
+  console.log('currentUserObject: ', currentUserObject);
+  if (currentUserObject.password == PasswordFromForm){
+    console.log("verified");
+    
+    connectedUserName.userName = currentUserObject.userName;
+    console.log('connectedUserName.userName: ', connectedUserName.userName);
+    let navigate = useNavigate();
+    navigate("/./chats");
+
+
+ 
+
+  };
+};
+  
+  
 
 
 function LoginForm() {
+
+
   return (
     <span className="d-flex justify-content-center">
       <form className="row g-3 border border-0 bg-light mt-5 mb-2 rounded">
@@ -21,11 +49,9 @@ function LoginForm() {
         </div>
         <div className="row pt-2">
           <div className="col">
-            <Link to="/./chats">
-              <button type="submit" id="login" className="btn btn-primary mb-3">
+              <button type="button" id="login" className="btn btn-primary mb-3" onClick={validiate}>
                 login
               </button>
-            </Link>
           </div>
           <div className="p-2 col">
             not registered? click <Link to="/./signup">here</Link>

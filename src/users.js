@@ -10,7 +10,7 @@ var usersList = [
 },
 {userName: "Itay",
     displayName: "Itay",
-    password:"123",
+    password:"1234",
     profileImagePath: "/profile.jpg",
     contactsUserNames: ["Yonadav"],
     messages: [new Message("Hi! Do you thing Shtusel is king?", new Date(), "Yonadav", "Itay"), new Message("Yes!", new Date()+1, "Itay", "Yonadav")]
