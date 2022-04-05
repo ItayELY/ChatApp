@@ -17,8 +17,7 @@ function validiate() {
     
     connectedUserName.userName = currentUserObject.userName;
     console.log('connectedUserName.userName: ', connectedUserName.userName);
-    let navigate = useNavigate();
-    navigate("/./chats");
+   
 
 
  
