@@ -10,8 +10,8 @@ import connectedUserName from "./Globals";
 
 
 var currentUserName = connectedUserName.userName;
-var currentUserName = "Yonadav"
-var currentContact = "Itay"
+var currentUserName = "Elon Musk"
+var currentContact = "Yonadav"
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
 
 
@@ -88,7 +88,9 @@ function Chat() {
             </div>
           </div>
           <div className="row h-100  position-relative        list-group-flush col overflow-auto" style={{ backgroundColor: 'lightskyblue' }}>
-            {currentUserObject.messages.map((message) => { return <ChatMessage message={message}></ChatMessage> })}
+            {currentUserObject.messages.map((message) => { if((message.writer === currentUserName
+              || message.writer === currentContact) && (message.receiver === currentUserName || 
+                message.receiver === currentContact))return <ChatMessage message={message}></ChatMessage> })}
             <div className="input-group mb-3 fixed-bottom position-absolute">
               <div className="input-group-prepend">
                 
