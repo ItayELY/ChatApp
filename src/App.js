@@ -7,12 +7,16 @@ import SignupForm from './SingupForm';
 import Chat from './Chat';
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import Shtusel from './Shtusel';
+import usersList from './users';
 
 
-
+// //Global Variables
+// localStorage.setItem("userNowConnected", "afaqef");
 
 function App() {
+ 
   return (
+  
     <div>
       <GeneralBackround></GeneralBackround>
       <Routes>

@@ -1,3 +1,6 @@
-var connectedUserName = {userName : 'Hi!!!!'};
+import React from "react";
+import { createContext } from "react";
 
-export default connectedUserName;
+
+const GlobalsContext = createContext({userNowConnected:"I"});
+export default GlobalsContext;

@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 
 
+
+
+
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
