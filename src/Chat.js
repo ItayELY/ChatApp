@@ -108,7 +108,7 @@ function changeBackground(e, color) {
           <div className="row h-100  position-relative d-flex align-content-end list-group-flush col overflow-auto" style={{ backgroundColor: 'lightskyblue' }}>
             {currentUserObject.messages.map((message) => { if((message.writer === currentUserName
               || message.writer === currentContact) && (message.receiver === currentUserName || 
-                message.receiver === currentContact))return <ChatMessage className="align-self-end" message={message}></ChatMessage> })}
+                message.receiver === currentContact))return <ChatMessage className="align-self-end "  message={message} sentByCurrentUser={message.writer === currentContact? true : false} align={"align-content-end"}></ChatMessage> })}
             <div className="input-group mb-3 fixed-bottom position-absolute">
               <div className="input-group-prepend">
                 
