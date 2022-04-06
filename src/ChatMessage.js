@@ -4,7 +4,7 @@ function ChatMessage({ message, sentByCurrentUser }) {
   console.log("message was rendered");
 
   return sentByCurrentUser === true ?
-    <div class="d-flex justify-content-start "><br />
+    <div class="d-flex justify-content-start overflow-auto"><br />
     <div class="d-inline-flex p-2  d-flex flex-column">
     <div class="">
         <div class="text-muted small text-nowrap p2">
@@ -19,7 +19,7 @@ function ChatMessage({ message, sentByCurrentUser }) {
       </div>
     :
     
-    <div class="d-flex justify-content-end "><br />
+    <div class="d-flex justify-content-end overflow-auto"><br />
 
     <div class="d-inline-flex p-2 d-flex flex-column">
     <div class="">

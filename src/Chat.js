@@ -105,7 +105,7 @@ function changeBackground(e, color) {
               <div className="fw-bold">{currentContact}</div>
             </div>
           </div>
-          <div className="row h-100  position-relative d-flex align-content-end list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
+          <div className="row h-100   list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
             {currentUserObject.messages.map((message) => { if((message.writer === currentUserName
               || message.writer === currentContact) && (message.receiver === currentUserName || 
                 message.receiver === currentContact))return <ChatMessage className="align-self-end "  message={message} sentByCurrentUser={message.writer === currentUserName? true : false} align={"align-content-end"}></ChatMessage> })}
