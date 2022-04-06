@@ -96,7 +96,7 @@ function changeBackground(e, color) {
             </div>
           </div>
           <ul className="list-group-flush col overflow-auto h-100">
-            {contacts.map((contact) => {return <div onMouseEnter={(e)=>{changeBackground(e, "cyan")}} onMouseLeave={(e)=>{changeBackground(e, "white")}} onClick={() => {setCurrentContact(contact.name); currentContact.numOfUnreadMessages = "0"}}><ContactItem contact={contact}></ContactItem></div>})}
+            {contacts.map((contact) => {return <div onMouseEnter={(e)=>{changeBackground(e, "LightSteelBlue")}} onMouseLeave={(e)=>{changeBackground(e, "white")}} onClick={() => {setCurrentContact(contact.name); currentContact.numOfUnreadMessages = "0"}}><ContactItem contact={contact}></ContactItem></div>})}
           </ul>
         </div>
         <div className="col h-100">
@@ -105,10 +105,10 @@ function changeBackground(e, color) {
               <div className="fw-bold">{currentContact}</div>
             </div>
           </div>
-          <div className="row h-100  position-relative d-flex align-content-end list-group-flush col overflow-auto" style={{ backgroundColor: 'lightskyblue' }}>
+          <div className="row h-100  position-relative d-flex align-content-end list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
             {currentUserObject.messages.map((message) => { if((message.writer === currentUserName
               || message.writer === currentContact) && (message.receiver === currentUserName || 
-                message.receiver === currentContact))return <ChatMessage className="align-self-end "  message={message} sentByCurrentUser={message.writer === currentContact? true : false} align={"align-content-end"}></ChatMessage> })}
+                message.receiver === currentContact))return <ChatMessage className="align-self-end "  message={message} sentByCurrentUser={message.writer === currentUserName? true : false} align={"align-content-end"}></ChatMessage> })}
             <div className="input-group mb-3 fixed-bottom position-absolute">
               <div className="input-group-prepend">
                 
