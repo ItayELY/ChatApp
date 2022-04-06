@@ -9,12 +9,10 @@ import { useState } from 'react';
 import connectedUserName from "./Globals";
 
 
-console.log('connectedUserName.userName: ', connectedUserName.userName);
+var currentUserName = connectedUserName.userName;
 
-var currentUserName = "Itay";
 var currentContact = "Yonadav"
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
-console.log('currentUserObject: ', currentUserObject);
 
 
 var contacts = [{
@@ -34,6 +32,8 @@ var contacts = [{
 
 
 function Chat() {
+  console.log('in chats bro connectedUserName.userName: ', currentUserName);
+
   const [count, setCount] = useState(0);
   var sendNewMessage = ()=>
    {
