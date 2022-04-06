@@ -34,6 +34,7 @@ function LoginForm() {
   
   const [usernameFromForm, setusernameFromForm] = useState("0")
   const [PasswordFromForm, setPasswordFromForm] = useState("0")
+  const navigate = useNavigate();
 
   const Validiate = () => {
     console.log("validating")
@@ -42,7 +43,6 @@ function LoginForm() {
    //verification:
    var currentUserObject = usersList.find(x => x.userName === usernameFromForm);
    console.log('currentUserObject: ', currentUserObject);
-   const navigate = useNavigate();
 
    if (currentUserObject.password == PasswordFromForm){
      console.log("verified");

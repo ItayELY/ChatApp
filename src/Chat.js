@@ -10,25 +10,12 @@ import connectedUserName from "./Globals";
 
 
 var currentUserName = connectedUserName.userName;
-
-var currentContact = "Yonadav"
+var currentUserName = "Yonadav"
+var currentContact = "Itay"
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
 
 
-var contacts = [{
-  name: "Yonadav",
-  latestMessage: "talk to me please",
-  numOfUnreadMessages: "3",
-  timeSinceLastMessage: "2 mins",
-  profileImagePath: "/profile.jpg"
-},
-{
-  name: "Elon Musk",
-  latestMessage: "talk to me please",
-  numOfUnreadMessages: "999",
-  timeSinceLastMessage: "2 mins",
-  profileImagePath: "/profile.jpg"
-}]
+var contacts = currentUserObject.userContacts
 
 
 function Chat() {
