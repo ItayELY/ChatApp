@@ -15,20 +15,20 @@ function ContactItem({contact}) {
       src={contact.profileImagePath}
       className="col col-lg-2 rounded-circle img-fluid"
       alt="Responsive image"
-      style={{ maxWidth: "20%" }}
+      style={{ maxWidth: "20%", backgroundColor: 'rgba(52, 52, 52, 0)'}}
     />
     {console.log('contact.profileImage: ', contact.profileImage)}
-    <div className="ms-2 me-auto">
-      <div className="fw-bold">{contact.name}</div>
+    <div className="ms-2 me-auto" style={{backgroundColor: 'rgba(52, 52, 52, 0)'}}>
+      <div className="fw-bold" style={{backgroundColor: 'rgba(52, 52, 52, 0)'}}>{contact.name}</div>
       {contact.latestMessage}
     </div>
-    <div className="ms-2 ">
-      <div>
-        <span className="badge bg-primary rounded-pill">{contact.numOfUnreadMessages}</span>
+    <div className="ms-2 " style={{backgroundColor: 'rgba(52, 52, 52, 0)'}}>
+      <div style={{backgroundColor: 'rgba(52, 52, 52, 0)'}}>
+        <span className="badge bg-primary rounded-pill" >{contact.numOfUnreadMessages}</span>
       </div>
-      <div>
+      <div >
         {" "}
-        <small>{contact.timeSinceLastMessage}</small>
+        <small >{contact.timeSinceLastMessage}</small>
       </div>
     </div>
   </li>
