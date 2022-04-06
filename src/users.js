@@ -60,6 +60,8 @@ var usersList = [{
                 "Itay"
             ),
             new Message("Yes!", new Date() + 1, "Itay", "Yonadav"),
+            new Message("Hi! where is the weed>", new Date(), "Elon Musk", "Itay"),
+            new Message("Here!", new Date() + 1, "Itay", "Elon Musk"),
         ],
     },
     {

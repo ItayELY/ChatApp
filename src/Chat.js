@@ -10,8 +10,8 @@ import connectedUserName from "./Globals";
 
 
 var currentUserName = connectedUserName.userName;
-var currentUserName = "Elon Musk"
-var currentContact = "Yonadav"
+
+var currentUserName = "Itay"
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
 
 
@@ -19,6 +19,8 @@ var contacts = currentUserObject.userContacts
 
 
 function Chat() {
+  const [currentContact, setCurrentContact] = useState("Elon Musk")
+
   console.log('in chats bro connectedUserName.userName: ', currentUserName);
 
   const [count, setCount] = useState(0);
@@ -78,7 +80,7 @@ function Chat() {
             </div>
           </div>
           <ul className="list-group-flush col overflow-auto h-100">
-            {contacts.map((contact) => { return <ContactItem contact={contact}></ContactItem> })}
+            {contacts.map((contact) => {return <div onClick={() => {setCurrentContact(contact.name); console.log("we clicked", currentContact)}}><ContactItem contact={contact}></ContactItem></div>})}
           </ul>
         </div>
         <div className="col h-100">
