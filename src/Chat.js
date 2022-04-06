@@ -18,8 +18,20 @@ var currentUserObject = usersList.find(x => x.userName === currentUserName);
 var contacts = currentUserObject.userContacts
 
 
+
 function Chat() {
-  const [currentContact, setCurrentContact] = useState("Elon Musk")
+  function AddContact(Identifier){
+  currentUserObject.userContacts.push({
+    name: Identifier,
+                latestMessage: "no messages",
+                numOfUnreadMessages: "0",
+                timeSinceLastMessage: "",
+                profileImagePath: "/profile.jpg",
+  });
+  setCurrentContact(Identifier)
+}
+  const [currentContact, setCurrentContact] = useState("Itay")
+  const [addNewContact, setAddNewContact] = useState("")
 
   console.log('in chats bro connectedUserName.userName: ', currentUserName);
 
@@ -67,12 +79,12 @@ function Chat() {
       <div class="modal-body">
       <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Contact Identifier:</label>
-            <input type="text" class="form-control" id="recipient-name"></input>
+            <input type="text" class="form-control" id="recipient-name" onChange={(e) => setAddNewContact(e.target.value)}></input>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-primary" onClick={()=>AddContact(addNewContact)}>Add</button>
       </div>
     </div>
   </div>
