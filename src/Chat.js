@@ -3,12 +3,12 @@ import SignupForm from "./SingupForm";
 import { Link } from "react-router-dom";
 import ContactItem from "./ContactItem";
 import ChatMessage from "./ChatMessage";
-import usersList from "./users";
 import Message from "./Message";
 import { useState } from 'react';
 import connectedUserName from "./Globals";
 
 
+var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
 var currentUserName = localStorage.getItem("userNowConnected");
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
 
