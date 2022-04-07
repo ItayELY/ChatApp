@@ -108,7 +108,8 @@ function Chat() {
                 return <div onMouseEnter={(e) => { changeBackground(e, "LightSteelBlue") }}
                   onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
                     setCurrentContact(contact.name);
-                    currentContact.numOfUnreadMessages = "0"
+                   var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
+                    contactX.numOfUnreadMessages = "0";
                   }}><ContactItem contact={contact}></ContactItem></div>
               })}
           </ul>
