@@ -10,6 +10,13 @@ var usersList = [{
                 profileImagePath: "/profile.jpg",
             },
             {
+                name: "Hemi Leibowitz",
+                latestMessage: "talk to me please",
+                numOfUnreadMessages: "3",
+                timeSinceLastMessage: "2 mins",
+                profileImagePath: "/profile.jpg",
+            },
+            {
                 name: "Elon Musk",
                 latestMessage: "talk to me please",
                 numOfUnreadMessages: "999",
