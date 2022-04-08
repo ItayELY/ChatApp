@@ -7,8 +7,12 @@ import Message from "./Message";
 import { useState } from 'react';
 import connectedUserName from "./Globals";
 
-
-var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
+if (!localStorage.getItem("storedUsersList")){
+  var usersList = []
+}
+else{
+  var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
+}
 var currentUserName = localStorage.getItem("userNowConnected");
 var currentUserObject = usersList.find(x => x.userName === currentUserName);
 
