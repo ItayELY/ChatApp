@@ -25,12 +25,17 @@ if (currentUserObject) {
 
 function Chat() {
   function AddContact(Identifier) {
+    let newContact = usersList.find(x => x.userName === Identifier);
+    if(!newContact){
+      console.log("didnt find user in ", usersList)
+      return;
+    }
     currentUserObject.userContacts.push({
-      name: Identifier,
+      name: newContact.userName,
       latestMessage: "no messages",
       numOfUnreadMessages: "0",
       timeSinceLastMessage: "",
-      profileImagePath: "/profile.jpg",
+      profileImagePath: newContact.profileImagePath,
     });
     setCurrentContact(Identifier)
   }
@@ -46,6 +51,9 @@ function Chat() {
   const [count, setCount] = useState(0);
   var sendNewMessage = () => {
     var text = document.getElementById("sendMessageBox").value;
+    if(text == ""){
+      return
+    }
     console.log('text: ', text);
     var m = new Message(text, new Date(), currentUserName, currentContact)
     console.log('m: ', m);

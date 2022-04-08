@@ -97,6 +97,21 @@ var usersList = [{
             new Message("Here!", new Date() + 1, "Itay", "Elon Musk"),
         ],
     },
+    {
+        userName: "Hemi Leibowitz",
+        userContacts: [{
+            name: "Itay",
+            latestMessage: "talk to me please",
+            numOfUnreadMessages: "3",
+            timeSinceLastMessage: "2 mins",
+            profileImagePath: "/profile.jpg",
+        }, ],
+        displayName: "Hemi Leibowitz",
+        password: "123",
+        profileImagePath: "/profile.jpg",
+        contactsUserNames: ["Itay"],
+        messages: [],
+    },
 ];
 
 export default usersList;
