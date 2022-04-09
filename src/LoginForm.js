@@ -18,17 +18,17 @@ function validiate() {
     var userNameConnected = currentUserObject.userName;
     console.log('connectedUserName.userName: ', userNameConnected);
     localStorage.setItem("userNowConnected", userNameConnected);
-    console.log(JSON.parse(localStorage.getItem("storedUsersList")));
 
-    if (!localStorage.getItem("storedUsersList")){
-      localStorage.setItem("storedUsersList", JSON.stringify(usersList));
+    if (localStorage.getItem("haveIStoredUsersAlready") != "yes") {
+      localStorage.setItem("storedUsersList", JSON.stringify(usersList))
+      console.log(JSON.parse(localStorage.getItem("storedUsersList")));
+      localStorage.setItem("haveIStoredUsersAlready", "yes");
+      console.log("listlistlistlist");
     }
-    if (localStorage.getItem("storedUsersList") != JSON.stringify(usersList)){
-      localStorage.setItem("storedUsersList", JSON.stringify(usersList));
-    }
+  
 
 
-    
+
     window.location.href = "/./chats";
 
 
