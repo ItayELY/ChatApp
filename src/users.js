@@ -29,13 +29,13 @@ var usersList = [{
         profileImagePath: "/profile.jpg",
         contactsUserNames: ["Itay"],
         messages: [
-            new Message(
+            new Message("textual",
                 "Hi! Do you thing Shtusel is king?",
                 new Date(),
                 "Yonadav",
                 "Itay"
             ),
-            new Message("Yes!", new Date() + 1, "Itay", "Yonadav"),
+            new Message("textual","Yes!", new Date() + 1, "Itay", "Yonadav"),
         ],
     },
     {
@@ -61,14 +61,14 @@ var usersList = [{
         contactsUserNames: ["Yonadav"],
         messages: [
             new Message(
-                "Hi! Do you thing Shtusel is king?",
+                "textual","Hi! Do you thing Shtusel is king?",
                 new Date(),
                 "Yonadav",
                 "Itay"
             ),
-            new Message("Yes!", new Date() + 1, "Itay", "Yonadav"),
-            new Message("Hi! where is the weed>", new Date(), "Elon Musk", "Itay"),
-            new Message("Here!", new Date() + 1, "Itay", "Elon Musk"),
+            new Message("textual","Yes!", new Date() + 1, "Itay", "Yonadav"),
+            new Message("textual","Hi! where is the weed>", new Date(), "Elon Musk", "Itay"),
+            new Message("textual","Here!", new Date() + 1, "Itay", "Elon Musk"),
         ],
     },
     {
@@ -93,8 +93,8 @@ var usersList = [{
         profileImagePath: "/profile.jpg",
         contactsUserNames: ["Itay"],
         messages: [
-            new Message("Hi! where is the weed>", new Date(), "Elon Musk", "Itay"),
-            new Message("Here!", new Date() + 1, "Itay", "Elon Musk"),
+            new Message("textual","Hi! where is the weed>", new Date(), "Elon Musk", "Itay"),
+            new Message("textual","Here!", new Date() + 1, "Itay", "Elon Musk"),
         ],
     },
     {

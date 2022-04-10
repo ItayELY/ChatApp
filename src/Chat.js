@@ -6,6 +6,7 @@ import ChatMessage from "./ChatMessage";
 import Message from "./Message";
 import { useState } from 'react';
 import connectedUserName from "./Globals";
+import usersList from './users';
 
 // if (!localStorage.getItem("storedUsersList")){
 //   var usersList = []
@@ -13,9 +14,19 @@ import connectedUserName from "./Globals";
 // else{
 //   var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
 // }
-var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
+localStorage.removeItem("storedUsersList")
+var derivedUsersList;
+if (!localStorage.getItem("storedUsersList")) {
+  derivedUsersList = usersList;
+  console.log(usersList);
+}
+else {
+  //console.log('localStorage.getItem("storedUsersList"): ', localStorage.getItem("storedUsersList"));
+  derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
+  
+}
 var currentUserName = localStorage.getItem("userNowConnected");
-var currentUserObject = usersList.find(x => x.userName === currentUserName);
+var currentUserObject = derivedUsersList.find(x => x.userName === currentUserName);
 
 console.log('currentUserName: ', currentUserName);
 if (currentUserObject) {
@@ -26,9 +37,9 @@ if (currentUserObject) {
 
 function Chat() {
   function AddContact(Identifier) {
-    let newContact = usersList.find(x => x.userName === Identifier);
+    let newContact = derivedUsersList.find(x => x.userName === Identifier);
     if (!newContact) {
-      console.log("didnt find user in ", usersList)
+      console.log("didnt find user in ", derivedUsersList)
       return;
     }
     currentUserObject.userContacts.push({
@@ -56,11 +67,11 @@ function Chat() {
       return
     }
     console.log('text: ', text);
-    var m = new Message(text, new Date(), currentUserName, currentContact)
+    var m = new Message("textual",text, new Date(), currentUserName, currentContact)
     console.log('message: ', m);
     currentUserObject.messages.push(m);
     document.getElementById("sendMessageBox").value = '';
-    localStorage.setItem("storedUsersList", JSON.stringify(usersList))
+    localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList))
     setCount(count + 1);
 
   };
@@ -85,10 +96,12 @@ function Chat() {
     var reader = new FileReader();
     reader.onload = function () {
       var thisImage = reader.result;
-      localStorage.setItem("imgData", JSON.stringify(thisImage));
+      var imageMessage = new Message("image",thisImage, new Date(), currentUserName, currentContact);
+      console.log('thisImage: ', thisImage);
+      currentUserObject.messages.push(imageMessage);
+      setCount(count+1);
     };
     reader.readAsDataURL(thisElement.files[0]);
-    console.log('localStorage.getItem("imgData"): ', localStorage.getItem("imgData"));
 
 
 

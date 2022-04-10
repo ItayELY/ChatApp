@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 function validiate() {
   var usernameFromForm = document.getElementById("inputUsername").value;
   var PasswordFromForm = document.getElementById("inputPassword").value;
-
   //verification:
   var currentUserObject = usersList.find(x => x.userName === usernameFromForm);
   if (currentUserObject.password == PasswordFromForm) {
@@ -24,7 +23,7 @@ function validiate() {
       console.log(JSON.parse(localStorage.getItem("storedUsersList")));
       localStorage.setItem("haveIStoredUsersAlready", "yes");
       console.log("listlistlistlist");
-    }
+    };
   
 
 

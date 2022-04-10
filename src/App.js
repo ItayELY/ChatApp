@@ -11,7 +11,15 @@ import usersList from './users';
 
 
 // //Global Variables
-// localStorage.setItem("userNowConnected", "afaqef");
+// localStorage.setItem("storedUsersList", usersList);
+// localStorage.setItem("userNowConnected", "Itay");
+
+function reset(){
+  localStorage.setItem("haveIStoredUsersAlready", "no");
+  localStorage.removeItem("storedUsersList");
+  window.location.reload();
+
+}
 
 function App() {
  
@@ -25,6 +33,7 @@ function App() {
         <Route path="signup" element={<SignupForm />} />
         <Route path="chats" element={<Chat />} />
       </Routes>
+      <button onClick={reset}>reset</button>
     </div>
 
   );
