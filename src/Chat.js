@@ -7,6 +7,7 @@ import Message from "./Message";
 import { useState } from 'react';
 import connectedUserName from "./Globals";
 import usersList from './users';
+import ChatImageMessage from './ChatImageMessage'
 
 // if (!localStorage.getItem("storedUsersList")){
 //   var usersList = []
@@ -170,11 +171,27 @@ function Chat() {
             </div>
           </div>
           <div className="row h-100   list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
+
+
+            
             {currentUserObject.messages.map((message) => {
+              if(message.type == "textual"){
               if ((message.writer === currentUserName
                 || message.writer === currentContact) && (message.receiver === currentUserName ||
-                  message.receiver === currentContact)) return <ChatMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatMessage>
-            })}
+                  message.receiver === currentContact)) 
+                  return <ChatMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatMessage>
+                }
+                  else if(message.type == "image"){
+                  if ((message.writer === currentUserName
+                    || message.writer === currentContact) && (message.receiver === currentUserName ||
+                      message.receiver === currentContact)) 
+                      return <ChatImageMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatImageMessage>
+                    }
+                    })}
+
+
+
+
             <div className="input-group mb-3 fixed-bottom position-absolute">
               <div className="input-group-prepend">
 
