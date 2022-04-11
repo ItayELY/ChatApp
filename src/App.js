@@ -8,6 +8,7 @@ import Chat from './Chat';
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import Shtusel from './Shtusel';
 import usersList from './users';
+import TakeSelfie from './TakeSelfie';
 
 
 // //Global Variables
@@ -34,6 +35,7 @@ function App() {
         <Route path="chats" element={<Chat />} />
       </Routes>
       <button onClick={reset}>reset</button>
+      {/* <TakeSelfie></TakeSelfie> */}
     </div>
 
   );

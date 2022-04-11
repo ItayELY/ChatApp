@@ -17,9 +17,9 @@ function ChatImageMessage({ message, sentByCurrentUser }) {
                         sent at {String(message.time)}
                     </div>
                 </div>
-                <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2" style={{ backgroundColor: "lightgreen" }}>
-                    <div class="font-weight-bold mb-1 ">from {message.writer}<br></br>
-                        <img src={message.text} />
+                <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2" style={{ backgroundColor: "lightgreen"}}>
+                    <div class="font-weight-bold mb-1" >from {message.writer}<br></br>
+                        <img src={message.text} style= {{maxWidth: "25%"}} />
                     </div>
 
                 </div>

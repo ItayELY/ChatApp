@@ -8,6 +8,7 @@ import { useState } from 'react';
 import connectedUserName from "./Globals";
 import usersList from './users';
 import ChatImageMessage from './ChatImageMessage'
+import TakeSelfie from "./TakeSelfie";
 
 // if (!localStorage.getItem("storedUsersList")){
 //   var usersList = []
@@ -15,6 +16,7 @@ import ChatImageMessage from './ChatImageMessage'
 // else{
 //   var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
 // }
+
 localStorage.removeItem("storedUsersList")
 var derivedUsersList;
 if (!localStorage.getItem("storedUsersList")) {
@@ -24,7 +26,7 @@ if (!localStorage.getItem("storedUsersList")) {
 else {
   //console.log('localStorage.getItem("storedUsersList"): ', localStorage.getItem("storedUsersList"));
   derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
-  
+
 }
 var currentUserName = localStorage.getItem("userNowConnected");
 var currentUserObject = derivedUsersList.find(x => x.userName === currentUserName);
@@ -68,11 +70,11 @@ function Chat() {
       return
     }
     console.log('text: ', text);
-    var m = new Message("textual",text, new Date(), currentUserName, currentContact)
+    var m = new Message("textual", text, new Date(), currentUserName, currentContact)
     console.log('message: ', m);
     currentUserObject.messages.push(m);
     document.getElementById("sendMessageBox").value = '';
-    localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList))
+    localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
     setCount(count + 1);
 
   };
@@ -93,21 +95,22 @@ function Chat() {
     // }
 
     // fr.readAsText(this.files[0]);
+
     var thisElement = document.getElementById("imageInput");
     var reader = new FileReader();
     reader.onload = function () {
       var thisImage = reader.result;
-      var imageMessage = new Message("image",thisImage, new Date(), currentUserName, currentContact);
+      var imageMessage = new Message("image", thisImage, new Date(), currentUserName, currentContact);
       console.log('thisImage: ', thisImage);
       currentUserObject.messages.push(imageMessage);
-      setCount(count+1);
+      localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
+      setCount(count + 1);
     };
     reader.readAsDataURL(thisElement.files[0]);
 
 
 
   };
-
 
 
   return (<span class="d-flex justify-content-center">
@@ -173,21 +176,21 @@ function Chat() {
           <div className="row h-100   list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
 
 
-            
+
             {currentUserObject.messages.map((message) => {
-              if(message.type == "textual"){
-              if ((message.writer === currentUserName
-                || message.writer === currentContact) && (message.receiver === currentUserName ||
-                  message.receiver === currentContact)) 
+              if (message.type == "textual") {
+                if ((message.writer === currentUserName
+                  || message.writer === currentContact) && (message.receiver === currentUserName ||
+                    message.receiver === currentContact))
                   return <ChatMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatMessage>
-                }
-                  else if(message.type == "image"){
-                  if ((message.writer === currentUserName
-                    || message.writer === currentContact) && (message.receiver === currentUserName ||
-                      message.receiver === currentContact)) 
-                      return <ChatImageMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatImageMessage>
-                    }
-                    })}
+              }
+              else if (message.type == "image") {
+                if ((message.writer === currentUserName
+                  || message.writer === currentContact) && (message.receiver === currentUserName ||
+                    message.receiver === currentContact))
+                  return <ChatImageMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatImageMessage>
+              }
+            })}
 
 
 
@@ -208,16 +211,19 @@ function Chat() {
 
             <ul className="dropdown-menu" aria-labelledby="dropdownAttach">
               <li><a className="dropdown-item" href="#">
-                <input id="imageInput" onChange={getImageInput} type="file" style={{ opacity: "0", zIndex: '-1' }} ></input>
+                <input id="imageInput" onChange={getImageInput} type="file" accept="image/*" style={{ opacity: "0", zIndex: '-1' }} ></input>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
                   <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                   <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
                 </svg>
               </a></li>
-              <li><a className="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
+              <li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" className="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z" />
               </svg>
               </a></li>
+
+            
+
               <li><a className="dropdown-item" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
                   <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
@@ -242,8 +248,24 @@ function Chat() {
         </div>
 
       </div>
+      {/* <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body small">
+                  ...
+                </div>
+              </div> */}
+              <TakeSelfie currentUserName = {currentUserName} currentUserObject = {currentUserObject}
+               currentContact = {currentContact} derivedUsersList = {derivedUsersList} count = {count} setCount = {setCount}></TakeSelfie>
+               {console.log("currentUserObject", currentUserObject)}
+
+
+
 
     </div>
+
 
   </span>);
 }
