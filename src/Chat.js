@@ -73,6 +73,11 @@ function Chat() {
     var m = new Message("textual", text, new Date(), currentUserName, currentContact)
     console.log('message: ', m);
     currentUserObject.messages.push(m);
+    var currentContactObject = currentUserObject.userContacts.find(x => x.name === currentContact);
+    currentContactObject.latestMessage = text;
+    currentContactObject = usersList.find(x => x.userName == currentContact);
+    currentContactObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
+
     document.getElementById("sendMessageBox").value = '';
     localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
     setCount(count + 1);
