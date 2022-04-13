@@ -24,9 +24,8 @@ if (!localStorage.getItem("storedUsersList")) {
   console.log(usersList);
 }
 else {
-  console.log('localStorage.getItem("storedUsersList"): ', localStorage.getItem("storedUsersList"));
   derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
-
+  console.log("derived ", derivedUsersList)
 }
 var currentUserName = localStorage.getItem("userNowConnected");
 var currentUserObject = derivedUsersList.find(x => x.userName === currentUserName);
@@ -45,6 +44,10 @@ function Chat() {
       console.log("didnt find user in ", derivedUsersList)
       return;
     }
+    if(currentUserObject.userContacts.find(x => x.name == Identifier)){
+      console.log("contact already exists")
+      return;
+    }
     currentUserObject.userContacts.push({
       name: newContact.userName,
       latestMessage: "no messages",
@@ -52,6 +55,7 @@ function Chat() {
       timeSinceLastMessage: "",
       profileImagePath: newContact.profileImagePath,
     });
+    console.log("image new contact: ", newContact.profileImagePath)
     newContact.userContacts.push({
       name: currentUserObject.userName,
       latestMessage: "no messages",
@@ -82,8 +86,10 @@ function Chat() {
     currentUserObject.messages.push(m);
     var currentContactObject = currentUserObject.userContacts.find(x => x.name === currentContact);
     currentContactObject.latestMessage = text;
-    currentContactObject = usersList.find(x => x.userName == currentContact);
-   // currentContactObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
+    var currentContactUserObject = derivedUsersList.find(x => x.userName == currentContact);
+    console.log("check111: ", currentContact, derivedUsersList)
+    currentContactUserObject.messages.push(m);
+    currentContactUserObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
 
     document.getElementById("sendMessageBox").value = '';
     localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
@@ -167,7 +173,7 @@ function Chat() {
             </div>
           </div>
           {console.log("contacts: ", contacts)}
-          {console.log("List: ", usersList)}
+          {console.log("List: ", derivedUsersList)}
           <ul className="list-group-flush col overflow-auto h-100">
             {
               contacts.map((contact) => {

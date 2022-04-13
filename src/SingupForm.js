@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import usersList from './users.js';
 
-var userImage
+var userImage = "./profile.jpg"
 var getImageInput = () => {
   console.log("upload Image");
   // var fr=new FileReader();
@@ -20,6 +20,10 @@ var getImageInput = () => {
    // var imageMessage = new Message("image", thisImage, new Date(), currentUserName, currentContact);
     console.log('thisImage: ', thisImage);
     userImage = thisImage
+    if (userImage == undefined){
+      console.log("undefined image")
+      
+    }
     //currentUserObject.messages.push(imageMessage);
     //localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
     //setCount(count + 1);
@@ -32,7 +36,7 @@ var getImageInput = () => {
 
 function signUp() {
     var _userName = document.getElementById("inputUsername").value;
-    console.log(' _userName: ', _userName);
+    console.log(' _userName: , image:', _userName, userImage);
     if(_userName == ""){
       alert("empty userName!");
       return;
@@ -65,7 +69,6 @@ function signUp() {
         profileImagePath: userImage
     });
     localStorage.setItem("storedUsersList", JSON.stringify(usersList))
-    console.log('users: ', usersList);
 
 };
 

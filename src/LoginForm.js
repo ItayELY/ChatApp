@@ -11,7 +11,15 @@ function validiate() {
   var usernameFromForm = document.getElementById("inputUsername").value;
   var PasswordFromForm = document.getElementById("inputPassword").value;
   //verification:
+  var derivedUsersList;
+if (!localStorage.getItem("storedUsersList")) {
   var currentUserObject = usersList.find(x => x.userName === usernameFromForm);
+}
+else {
+  derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
+  var currentUserObject = derivedUsersList.find(x => x.userName === usernameFromForm);
+}
+  
   if (currentUserObject.password == PasswordFromForm) {
     console.log("verified");
     var userNameConnected = currentUserObject.userName;
