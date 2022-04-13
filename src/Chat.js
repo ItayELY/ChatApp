@@ -44,7 +44,7 @@ function Chat() {
       console.log("didnt find user in ", derivedUsersList)
       return;
     }
-    if(currentUserObject.userContacts.find(x => x.name == Identifier)){
+    if (currentUserObject.userContacts.find(x => x.name == Identifier)) {
       console.log("contact already exists")
       return;
     }
@@ -89,7 +89,7 @@ function Chat() {
     var currentContactUserObject = derivedUsersList.find(x => x.userName == currentContact);
     console.log("check111: ", currentContact, derivedUsersList)
     currentContactUserObject.messages.push(m);
-    currentContactUserObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
+    currentContactUserObject.userContacts.find(x => x.name == currentUserName).latestMessage = text;
 
     document.getElementById("sendMessageBox").value = '';
     localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
@@ -165,7 +165,7 @@ function Chat() {
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" onClick={() => {AddContact(addNewContact)}}>Add</button>
+                      <button type="button" class="btn btn-primary" onClick={() => { AddContact(addNewContact) }}>Add</button>
                     </div>
                   </div>
                 </div>
@@ -241,7 +241,7 @@ function Chat() {
               </svg>
               </a></li>
 
-            
+
 
               <li><a className="dropdown-item" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
@@ -276,9 +276,9 @@ function Chat() {
                   ...
                 </div>
               </div> */}
-              <TakeSelfie currentUserName = {currentUserName} currentUserObject = {currentUserObject}
-               currentContact = {currentContact} derivedUsersList = {derivedUsersList} count = {count} setCount = {setCount}></TakeSelfie>
-               {console.log("currentUserObject", currentUserObject)}
+      <TakeSelfie currentUserName={currentUserName} currentUserObject={currentUserObject}
+        currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></TakeSelfie>
+      {console.log("currentUserObject", currentUserObject)}
 
 
 
