@@ -17,14 +17,14 @@ import TakeSelfie from "./TakeSelfie";
 //   var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
 // }
 
-localStorage.removeItem("storedUsersList")
+//localStorage.removeItem("storedUsersList")
 var derivedUsersList;
 if (!localStorage.getItem("storedUsersList")) {
   derivedUsersList = usersList;
   console.log(usersList);
 }
 else {
-  //console.log('localStorage.getItem("storedUsersList"): ', localStorage.getItem("storedUsersList"));
+  console.log('localStorage.getItem("storedUsersList"): ', localStorage.getItem("storedUsersList"));
   derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
 
 }
@@ -52,6 +52,13 @@ function Chat() {
       timeSinceLastMessage: "",
       profileImagePath: newContact.profileImagePath,
     });
+    newContact.userContacts.push({
+      name: currentUserObject.userName,
+      latestMessage: "no messages",
+      numOfUnreadMessages: "0",
+      timeSinceLastMessage: "",
+      profileImagePath: currentUserObject.profileImagePath,
+    })
     setCurrentContact(Identifier)
   }
   function changeBackground(e, color) {
@@ -76,7 +83,7 @@ function Chat() {
     var currentContactObject = currentUserObject.userContacts.find(x => x.name === currentContact);
     currentContactObject.latestMessage = text;
     currentContactObject = usersList.find(x => x.userName == currentContact);
-    currentContactObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
+   // currentContactObject.userContacts.find(x=> x.name == currentUserName).latestMessage = text;
 
     document.getElementById("sendMessageBox").value = '';
     localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
@@ -161,7 +168,8 @@ function Chat() {
           </div>
           <ul className="list-group-flush col overflow-auto h-100">
 
-            {
+            {() =>{
+              console.log("El Problema");
               contacts.map((contact) => {
                 return <div onMouseEnter={(e) => { changeBackground(e, "LightSteelBlue") }}
                   onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
@@ -169,7 +177,7 @@ function Chat() {
                     var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
                     contactX.numOfUnreadMessages = "0";
                   }}><ContactItem contact={contact}></ContactItem></div>
-              })}
+              })}}
           </ul>
         </div>
         <div className="col h-100">
