@@ -166,10 +166,10 @@ function Chat() {
               </div>
             </div>
           </div>
+          {console.log("contacts: ", contacts)}
+          {console.log("List: ", usersList)}
           <ul className="list-group-flush col overflow-auto h-100">
-
-            {() =>{
-              console.log("El Problema");
+            {
               contacts.map((contact) => {
                 return <div onMouseEnter={(e) => { changeBackground(e, "LightSteelBlue") }}
                   onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
@@ -177,7 +177,7 @@ function Chat() {
                     var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
                     contactX.numOfUnreadMessages = "0";
                   }}><ContactItem contact={contact}></ContactItem></div>
-              })}}
+              })}
           </ul>
         </div>
         <div className="col h-100">

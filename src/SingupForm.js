@@ -64,7 +64,7 @@ function signUp() {
         messages: [],
         profileImagePath: userImage
     });
-
+    localStorage.setItem("storedUsersList", JSON.stringify(usersList))
     console.log('users: ', usersList);
 
 };
