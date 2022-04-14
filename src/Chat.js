@@ -10,6 +10,7 @@ import usersList from './users';
 import ChatImageMessage from './ChatImageMessage'
 import TakeSelfie from "./TakeSelfie";
 import AudioRecorder from "./AudioRecorder";
+import ChatAudioMessage from "./ChatAudioMessage";
  
 
 // if (!localStorage.getItem("storedUsersList")){
@@ -20,6 +21,8 @@ import AudioRecorder from "./AudioRecorder";
 // }
 
 //localStorage.removeItem("storedUsersList")
+
+
 var derivedUsersList;
 if (!localStorage.getItem("storedUsersList")) {
   derivedUsersList = usersList;
@@ -40,6 +43,9 @@ if (currentUserObject) {
 
 
 function Chat() {
+  
+  console.log("Chats was rendered")
+  
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);
     if (!newContact) {
@@ -211,6 +217,17 @@ function Chat() {
                     message.receiver === currentContact))
                   return <ChatImageMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatImageMessage>
               }
+
+              else if (message.type == "audio") {
+                if ((message.writer === currentUserName
+                  || message.writer === currentContact) && (message.receiver === currentUserName ||
+                    message.receiver === currentContact))
+                    console.log('audio: ', message);
+                  return <ChatAudioMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatAudioMessage>
+              }
+
+
+
             })}
 
 
@@ -245,12 +262,14 @@ function Chat() {
 
 
 
-              <li><a className="dropdown-item" href="#">
+              <li><a  data-bs-toggle="offcanvas" data-bs-target="#offcanvasAudioRecord" aria-controls="offcanvasBottom" className="dropdown-item" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
                   <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
                   <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z" />
                 </svg>
               </a></li>
+
+
               <li><a className="dropdown-item" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                   <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
@@ -271,19 +290,13 @@ function Chat() {
       </div>
       <TakeSelfie currentUserName={currentUserName} currentUserObject={currentUserObject}
         currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></TakeSelfie>
-      {console.log("currentUserObject", currentUserObject)}
 
 
 <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
 
-
-      
-
-    {/* <script src="audioRecording.js"></script>
-    <script src="indexAudioRecording.js"></script> */}
-
-<AudioRecorder></AudioRecorder>
+<AudioRecorder currentUserName={currentUserName} currentUserObject={currentUserObject}
+        currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></AudioRecorder>
 
 
 
