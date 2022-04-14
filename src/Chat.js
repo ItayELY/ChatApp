@@ -9,6 +9,8 @@ import connectedUserName from "./Globals";
 import usersList from './users';
 import ChatImageMessage from './ChatImageMessage'
 import TakeSelfie from "./TakeSelfie";
+import AudioRecorder from "./AudioRecorder";
+ 
 
 // if (!localStorage.getItem("storedUsersList")){
 //   var usersList = []
@@ -230,7 +232,7 @@ function Chat() {
 
             <ul className="dropdown-menu" aria-labelledby="dropdownAttach">
               <li><a className="dropdown-item" href="#">
-                <input id="imageInput" onChange={getImageInput} type="file" accept="image/*" style={{ opacity: "0", zIndex: '-1' }} ></input>
+                <input id="imageInput" onChange={getImageInput} type="file" accept="image/*" style={{ opacity: "0", width: "20%" }}  ></input>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
                   <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                   <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
@@ -267,19 +269,21 @@ function Chat() {
         </div>
 
       </div>
-      {/* <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-                <div class="offcanvas-header">
-                  <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body small">
-                  ...
-                </div>
-              </div> */}
       <TakeSelfie currentUserName={currentUserName} currentUserObject={currentUserObject}
         currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></TakeSelfie>
       {console.log("currentUserObject", currentUserObject)}
 
+
+<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+
+
+
+      
+
+    {/* <script src="audioRecording.js"></script>
+    <script src="indexAudioRecording.js"></script> */}
+
+<AudioRecorder></AudioRecorder>
 
 
 
