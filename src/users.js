@@ -82,6 +82,12 @@ var usersList = [{
     {
         userName: "Elon Musk",
         userContacts: [{
+            name: "Yonadav",
+            latestMessage: "talk to me please",
+            numOfUnreadMessages: "3",
+            timeSinceLastMessage: "2 mins",
+            profileImagePath: "/profile.jpg",
+        },{
                 name: "Itay",
                 latestMessage: "talk to me please",
                 numOfUnreadMessages: "3",
@@ -114,6 +120,12 @@ var usersList = [{
     {
         userName: "Hemi Leibowitz",
         userContacts: [{
+            name: "Yonadav",
+            latestMessage: "talk to me please",
+            numOfUnreadMessages: "3",
+            timeSinceLastMessage: "2 mins",
+            profileImagePath: "/profile.jpg",
+        },{
             name: "Itay",
             latestMessage: "talk to me please",
             numOfUnreadMessages: "3",

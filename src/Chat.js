@@ -97,6 +97,7 @@ function Chat() {
     var currentContactUserObject = derivedUsersList.find(x => x.userName == currentContact);
     console.log("check111: ", currentContact, derivedUsersList)
     currentContactUserObject.messages.push(m);
+    console.log('currentContactUserObject.userContacts.find(x => x.name == currentUserName): ', currentContactUserObject.userContacts.find(x => x.name == currentUserName));
     currentContactUserObject.userContacts.find(x => x.name == currentUserName).latestMessage = text;
 
     document.getElementById("sendMessageBox").value = '';
