@@ -19,7 +19,7 @@ function ChatImageMessage({ message, sentByCurrentUser }) {
                 </div>
                 <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2" style={{ backgroundColor: "lightgreen"}}>
                     <div class="font-weight-bold mb-1" >from {message.writer}<br></br>
-                        <img src={message.text} style= {{maxWidth: "25%"}} />
+                        <img src={message.text} style= {{maxWidth: "50%"}} />
                     </div>
 
                 </div>
@@ -39,7 +39,7 @@ function ChatImageMessage({ message, sentByCurrentUser }) {
                 </div>
                 <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2 " style={{ backgroundColor: "cadetBlue" }} >
                 <div class="font-weight-bold mb-1 ">from {message.writer}<br></br>
-                        <img src={message.text} />
+                        <img src={message.text} style= {{maxWidth: "50%"}} />
                     </div>
                 </div>
             </div>

@@ -336,7 +336,14 @@ function AudioRecorder(props) {
 
             localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
             //console.log(localStorage.getItem('storedUsersList'));
-            setCount(count + 1);
+            console.log("setting count");
+            setCount((count) => {
+                count = count + 1 // "React is awesome!"
+
+                return count;
+            });
+            console.log('setCount(count + 1);: ', count);
+            return;
 
         };
         reader.readAsDataURL(recorderAudioAsBlob);
@@ -509,7 +516,7 @@ function AudioRecorder(props) {
             </div>
             <div class="offcanvas-body small"></div>
 
-            
+
             <div class="audio-recording-container">
                 <h1 class="title">Audio Recording API Demo</h1>
                 <i class="start-recording-button fa fa-microphone" aria-hidden="true">start</i>

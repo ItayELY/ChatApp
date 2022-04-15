@@ -201,7 +201,7 @@ function Chat() {
               <div className="fw-bold">{currentContact}</div>
             </div>
           </div>
-          <div className="row h-100   list-group-flush col overflow-auto" style={{ backgroundColor: 'azure' }}>
+          <div className="row h-100   list-group-flush col overflow-auto" style={{ backgroundColor: 'azure', }}>
 
 
 
