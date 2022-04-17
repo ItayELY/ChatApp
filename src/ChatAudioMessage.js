@@ -6,8 +6,6 @@ import Message from "./Message";
 function ChatAudioMessage({ message, sentByCurrentUser }) {
 
 
-    console.log(message.text);
-
 
     return sentByCurrentUser === true ?
         <div class="d-flex justify-content-start overflow-auto"><br />

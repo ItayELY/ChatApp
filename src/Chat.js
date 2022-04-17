@@ -45,6 +45,7 @@ if (currentUserObject) {
 function Chat() {
   
   console.log("Chats was rendered")
+  console.log(derivedUsersList);
   
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);
@@ -77,8 +78,9 @@ function Chat() {
     e.target.style.background = color;
   }
 
-  const [currentContact, setCurrentContact] = useState("Itay")
-  const [addNewContact, setAddNewContact] = useState("")
+  const [currentContact, setCurrentContact] = useState("");
+  const [addNewContact, setAddNewContact] = useState("");
+  
 
   console.log('in chats bro connectedUserName.userName: ', currentUserName);
 
@@ -102,7 +104,11 @@ function Chat() {
 
     document.getElementById("sendMessageBox").value = '';
     localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
-    setCount(count + 1);
+    setCount((count) => {
+      count = count + 1 // "React is awesome!"
+
+      return count;
+  });
 
   };
 
@@ -188,7 +194,12 @@ function Chat() {
               contacts.map((contact) => {
                 return <div onMouseEnter={(e) => { changeBackground(e, "LightSteelBlue") }}
                   onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
-                    setCurrentContact(contact.name);
+                    //setCurrentContact(contact.name);
+                    setCurrentContact((currentContact) => {
+                      currentContact = contact.name  // "React is awesome!"
+                      console.log('currentContact: ', currentContact);
+                      return currentContact;
+                  });
                     var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
                     contactX.numOfUnreadMessages = "0";
                   }}><ContactItem contact={contact}></ContactItem></div>
@@ -223,7 +234,6 @@ function Chat() {
                 if ((message.writer === currentUserName
                   || message.writer === currentContact) && (message.receiver === currentUserName ||
                     message.receiver === currentContact))
-                    console.log('audio: ', message);
                   return <ChatAudioMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatAudioMessage>
               }
 
@@ -297,7 +307,9 @@ function Chat() {
 
 
 <AudioRecorder currentUserName={currentUserName} currentUserObject={currentUserObject}
-        currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></AudioRecorder>
+        currentContact={currentContact} setCurrentContact={setCurrentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></AudioRecorder>
+        {        console.log('currentContact: ', currentContact)
+}
 
 
 

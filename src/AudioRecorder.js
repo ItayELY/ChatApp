@@ -3,6 +3,7 @@ import Message from "./Message";
 
 
 function AudioRecorder(props) {
+    console.log('props: ', props);
 
     //API to handle audio recording 
 
@@ -314,25 +315,28 @@ function AudioRecorder(props) {
     /*********************************/
     //Yonadav added. The Internet is not to blame for what follows:
     function sendAudioMessageChatapp(recorderAudioAsBlob) {
+        let reader = new FileReader();
+        props.setCurrentContact((prevCurrentContact)=>{
         var currentUserName = props.currentUserName;
         var currentUserObject = props.currentUserObject;
-        var currentContact = props.currentContact;
+        var currentContact = prevCurrentContact;
         var derivedUsersList = props.derivedUsersList;
         var count = props.count;
         var setCount = props.setCount;
-
         //read content of files (Blobs) asynchronously
-        let reader = new FileReader();
+        
 
         //once content has been read
         reader.onload = (e) => {
             //store the base64 URL that represents the URL of the recording audio
             let base64URL = e.target.result;
-            console.log('base64URL: ', base64URL);
 
             var audioMessage = new Message("audio", base64URL, new Date(), currentUserName, currentContact);
-            console.log('audioMessage: ', audioMessage);
+            console.log('currentContact sending message!!!!!!!!!!!!!: ', currentContact);
+            console.log('audioMessage!!!!!!!!!: ', audioMessage);
+            var currentContactObject = derivedUsersList.find(x => x.userName === currentContact);
             currentUserObject.messages.push(audioMessage);
+            currentContactObject.messages.push(audioMessage);
 
             localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
             //console.log(localStorage.getItem('storedUsersList'));
@@ -346,7 +350,11 @@ function AudioRecorder(props) {
             return;
 
         };
+        
+        return prevCurrentContact;
+        })        
         reader.readAsDataURL(recorderAudioAsBlob);
+        
     };
     /*********************************/
 
@@ -504,8 +512,8 @@ function AudioRecorder(props) {
     //************************************************************************************** */
     React.useEffect(() => {
         // Runs after the first render() lifecycle
-        initializeGlobals()
-        initializeListeners()
+        initializeGlobals();
+        initializeListeners();
     }, []);
 
     return (
