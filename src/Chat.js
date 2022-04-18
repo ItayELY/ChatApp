@@ -11,7 +11,8 @@ import ChatImageMessage from './ChatImageMessage'
 import TakeSelfie from "./TakeSelfie";
 import AudioRecorder from "./AudioRecorder";
 import ChatAudioMessage from "./ChatAudioMessage";
- 
+import ChatVideoMessage from "./ChatVideoMessage"; 
+
 
 // if (!localStorage.getItem("storedUsersList")){
 //   var usersList = []
@@ -43,10 +44,10 @@ if (currentUserObject) {
 
 
 function Chat() {
-  
+
   console.log("Chats was rendered")
   console.log(derivedUsersList);
-  
+
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);
     if (!newContact) {
@@ -80,7 +81,7 @@ function Chat() {
 
   const [currentContact, setCurrentContact] = useState("");
   const [addNewContact, setAddNewContact] = useState("");
-  
+
 
   console.log('in chats bro connectedUserName.userName: ', currentUserName);
 
@@ -108,7 +109,7 @@ function Chat() {
       count = count + 1 // "React is awesome!"
 
       return count;
-  });
+    });
 
   };
 
@@ -118,7 +119,17 @@ function Chat() {
     }
 
   };
+  var clickImageInputIcon = () => {
+    console.log('clickImageInputIcon: ');
+    document.getElementById('imageInput').click();
+    //getImageInput();
+  };
 
+  var clickVideoInputIcon = () => {
+    console.log('clickVideoInputIcon: ');
+    document.getElementById('videoInput').click();
+    //getImageInput();
+  };
   var getImageInput = () => {
     console.log("upload Image");
     // var fr=new FileReader();
@@ -136,7 +147,34 @@ function Chat() {
       var imageMessage = new Message("image", thisImage, new Date(), currentUserName, currentContact);
       console.log('thisImage: ', thisImage);
       currentUserObject.messages.push(imageMessage);
+      var currentContactUserObject = derivedUsersList.find(x => x.userName == currentContact);
+      currentContactUserObject.messages.push(imageMessage);
       localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
+      setCount(count + 1);
+    };
+    reader.readAsDataURL(thisElement.files[0]);
+  };
+
+  var getVideoInput = () => {
+    console.log("upload Video");
+    // var fr=new FileReader();
+    // fr.onload=function(){
+    //     document.getElementById('output')
+    //             .textContent=fr.result;
+    // }
+
+    // fr.readAsText(this.files[0]);
+
+    var thisElement = document.getElementById("videoInput");
+    var reader = new FileReader();
+    reader.onload = function () {
+      var thisVideo = reader.result;
+      var videoMessage = new Message("video", thisVideo, new Date(), currentUserName, currentContact);
+      console.log('thisVideo: ', thisVideo);
+      currentUserObject.messages.push(videoMessage);
+      var currentContactUserObject = derivedUsersList.find(x => x.userName == currentContact);
+      currentContactUserObject.messages.push(videoMessage);
+      //localStorage.setItem("storedUsersList", JSON.stringify(derivedUsersList));
       setCount(count + 1);
     };
     reader.readAsDataURL(thisElement.files[0]);
@@ -144,6 +182,7 @@ function Chat() {
 
 
   };
+  
 
 
   return (<span class="d-flex justify-content-center">
@@ -199,7 +238,7 @@ function Chat() {
                       currentContact = contact.name  // "React is awesome!"
                       console.log('currentContact: ', currentContact);
                       return currentContact;
-                  });
+                    });
                     var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
                     contactX.numOfUnreadMessages = "0";
                   }}><ContactItem contact={contact}></ContactItem></div>
@@ -236,6 +275,12 @@ function Chat() {
                     message.receiver === currentContact))
                   return <ChatAudioMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatAudioMessage>
               }
+              else if (message.type == "video") {
+                if ((message.writer === currentUserName
+                  || message.writer === currentContact) && (message.receiver === currentUserName ||
+                    message.receiver === currentContact))
+                  return <ChatVideoMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatVideoMessage>
+              }
 
 
 
@@ -259,13 +304,30 @@ function Chat() {
             </button>
 
             <ul className="dropdown-menu" aria-labelledby="dropdownAttach">
+
+              
               <li><a className="dropdown-item" href="#">
-                <input id="imageInput" onChange={getImageInput} type="file" accept="image/*" style={{ opacity: "0", width: "20%" }}  ></input>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
-                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
-                </svg>
+                <input id="imageInput" onChange={getImageInput} type="file" accept="image/*" style={{ opacity: "0", width: "20%" }}   ></input>
+                <div id="imageInputIcon" onClick={clickImageInputIcon}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                  </svg>
+                </div>
               </a></li>
+
+              <li><a className="dropdown-item" href="#">
+                <input id="videoInput" onChange={getVideoInput} type="file" accept="video/*" style={{ opacity: "0", width: "20%" }}   ></input>
+                <div id="videoInputIcon" onClick={clickVideoInputIcon}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                    <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z" />
+                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                  </svg>
+                </div>
+              </a></li>
+
+
+
               <li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" className="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z" />
               </svg>
@@ -273,7 +335,7 @@ function Chat() {
 
 
 
-              <li><a  data-bs-toggle="offcanvas" data-bs-target="#offcanvasAudioRecord" aria-controls="offcanvasBottom" className="dropdown-item" href="#">
+              <li><a data-bs-toggle="offcanvas" data-bs-target="#offcanvasAudioRecord" aria-controls="offcanvasBottom" className="dropdown-item" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
                   <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
                   <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z" />
@@ -303,13 +365,13 @@ function Chat() {
         currentContact={currentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></TakeSelfie>
 
 
-<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+      <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
 
-<AudioRecorder currentUserName={currentUserName} currentUserObject={currentUserObject}
+      <AudioRecorder currentUserName={currentUserName} currentUserObject={currentUserObject}
         currentContact={currentContact} setCurrentContact={setCurrentContact} derivedUsersList={derivedUsersList} count={count} setCount={setCount}></AudioRecorder>
-        {        console.log('currentContact: ', currentContact)
-}
+      {console.log('currentContact: ', currentContact)
+      }
 
 
 
