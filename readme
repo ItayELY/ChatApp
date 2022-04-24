@@ -4,6 +4,9 @@ assignment for the course Algorithmic Programming 2.
 As you run the project through npm, the login
 Screen will appear, with an option to register.
 
+To to see the full functionality if the app, log in with
+the username: Itay and the password: 1234.
+
 If registered, you can log in.
 Then, the Chats screen will appear. You can add
 new contacts(if they exist), and send messages to your contacts.
