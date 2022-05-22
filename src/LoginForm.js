@@ -7,31 +7,44 @@ import { useState } from "react";
 import GlobalsContext from "./Globals";
 import React, { useContext } from 'react';
 
-function validiate() {
+
+
+
+async function validiate() {
   var usernameFromForm = document.getElementById("inputUsername").value;
   var PasswordFromForm = document.getElementById("inputPassword").value;
+  const r = await fetch('http://localhost:5200/api/LoginApi', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({ id: usernameFromForm, password: PasswordFromForm}) // body data type must match "Content-Type" header
+  });
+  const responseJson =await r.json();
+  console.log(responseJson);
   //verification:
-  var derivedUsersList;
-if (!localStorage.getItem("storedUsersList")) {
-  var currentUserObject = usersList.find(x => x.userName === usernameFromForm);
-}
-else {
-  derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
-  var currentUserObject = derivedUsersList.find(x => x.userName === usernameFromForm);
-}
+  var currentUserObject = responseJson;
+
   
   if (currentUserObject.password == PasswordFromForm) {
     console.log("verified");
-    var userNameConnected = currentUserObject.userName;
+    var userNameConnected = currentUserObject.id;
     console.log('connectedUserName.userName: ', userNameConnected);
     localStorage.setItem("userNowConnected", userNameConnected);
 
+    
     if (localStorage.getItem("haveIStoredUsersAlready") != "yes") {
       localStorage.setItem("storedUsersList", JSON.stringify(usersList))
       console.log(JSON.parse(localStorage.getItem("storedUsersList")));
       localStorage.setItem("haveIStoredUsersAlready", "yes");
       console.log("listlistlistlist");
-    };
+    }
   
 
 
@@ -72,6 +85,9 @@ function LoginForm() {
           </div>
           <div className="p-2 col">
             not registered? click <Link to="/./signup">here</Link>
+          </div>
+          <div className="p-2 col">
+            checker <Link to="/./ajax">here</Link>
           </div>
         </div>
       </form>

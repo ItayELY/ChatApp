@@ -25,8 +25,17 @@ import React from "react";
 //localStorage.removeItem("storedUsersList")
 console.log("chats render");
 
+async function getAll() {
+  const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'});
 
-var derivedUsersList;
+  console.log(r.body)
+  const d = await r.json()
+  console.log(d);
+  return d
+}
+var derivedUsersList = [];
+derivedUsersList = getAll();
+/*
 if (!localStorage.getItem("storedUsersList")) {
   derivedUsersList = usersList;
   console.log(usersList);
@@ -35,8 +44,9 @@ else {
   derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
   console.log("derived ", derivedUsersList)
 }
+*/
 var currentUserName = localStorage.getItem("userNowConnected");
-var currentUserObject = derivedUsersList.find(x => x.userName === currentUserName);
+var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.userName === currentUserName) : undefined;
 
 console.log('currentUserName: ', currentUserName);
 if (currentUserObject) {

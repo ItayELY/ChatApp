@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import './LoginForm';
 import LoginForm from './LoginForm';
+import Ajax from './Ajax';
+
 import GeneralBackround from './GeneralBackround';
 import SignupForm from './SingupForm';
 import Chat from './Chat';
@@ -33,6 +35,7 @@ function App() {
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<SignupForm />} />
         <Route path="chats" element={<Chat />} />
+        <Route path="ajax" element={<Ajax />} />
       </Routes>
       <button onClick={reset}>reset</button>
       {/* <TakeSelfie></TakeSelfie> */}
