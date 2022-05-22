@@ -8,7 +8,12 @@ import GlobalsContext from "./Globals";
 import React, { useContext } from 'react';
 
 
+async function getAll() {
+  var returned
+  const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'});
+  return r.json()
 
+}
 
 async function validiate() {
   var usernameFromForm = document.getElementById("inputUsername").value;
@@ -48,9 +53,10 @@ async function validiate() {
   
 
 
+    var jsonOfUsers = await getAll();
 
     window.location.href = "/./chats";
-
+    localStorage.setItem("storedUsersList", JSON.stringify(jsonOfUsers))
 
   };
 };

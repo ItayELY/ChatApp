@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ContactItem from "./ContactItem";
 import ChatMessage from "./ChatMessage";
 import Message from "./Message";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import connectedUserName from "./Globals";
 import usersList from './users';
 import ChatImageMessage from './ChatImageMessage'
@@ -26,15 +26,27 @@ import React from "react";
 console.log("chats render");
 
 async function getAll() {
-  const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'});
+  var returned
+  const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'}).then(response => response.json()).then(list => {returned = list});
+  return returned
 
-  console.log(r.body)
-  const d = await r.json()
-  console.log(d);
-  return d
 }
+async function contactsOfUser(userId) {
+  const r = await fetch('http://localhost:5200/api/Contacts?userId=' + userId);
+  const d =await  r.json();
+  console.log(d);
+  return d;
+}
+
+var currentUserName
+var currentUserObject
 var derivedUsersList = [];
-derivedUsersList = getAll();
+
+async function getDerived(){
+  derivedUsersList = await getAll();
+  console.log("derived hahaha ", derivedUsersList)
+}
+
 /*
 if (!localStorage.getItem("storedUsersList")) {
   derivedUsersList = usersList;
@@ -45,20 +57,28 @@ else {
   console.log("derived ", derivedUsersList)
 }
 */
-var currentUserName = localStorage.getItem("userNowConnected");
-var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.userName === currentUserName) : undefined;
-
-console.log('currentUserName: ', currentUserName);
-if (currentUserObject) {
-  var contacts = currentUserObject.userContacts;
-}
 
 
 
-function Chat() {
+
+
+
+ function Chat() {
+   derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"))
+   
+
 
   console.log("Chats was rendered")
   console.log(derivedUsersList);
+  var currentUserName = localStorage.getItem("userNowConnected");
+var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.id === currentUserName) : undefined;
+console.log("user object: ", currentUserObject)
+
+console.log('currentUserName: ', currentUserName);
+if (currentUserObject) {
+  var contacts = currentUserObject.contacts
+}
+  
 
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);

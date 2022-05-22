@@ -47,7 +47,7 @@ function Ajax(){
     }
     
     async function contacts() {
-        const r = await fetch('http://localhost:5200/api/Contacts');
+        const r = await fetch('http://localhost:5200/api/Contacts?userId=itay');
         const d = r.json();
         console.log(d);
     }
@@ -103,7 +103,7 @@ function Ajax(){
   <button onClick={getAll}>gel all</button>
   <button onClick={login}>login</button>
   <button onClick={getAll}>register</button>
-  <button onclick="contacts()">all contacts</button>
+  <button onClick={contacts}>all contacts</button>
   <button onclick="contact()">contact</button>
   <button onclick="addContact()">add pal</button>
   <button onclick="messages()">messages</button>
