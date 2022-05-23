@@ -13,159 +13,47 @@ import AudioRecorder from "./AudioRecorder";
 import ChatAudioMessage from "./ChatAudioMessage";
 import ChatVideoMessage from "./ChatVideoMessage";
 
+function Chat2() {
+    async function getAll() {
+        var returned
+        const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'});
+        var d = r.json()
+        
+        return d
+      
+      }
+      function AddContact(Identifier) {
+        let newContact = derivedUsersList.find(x => x.userName === Identifier);
+        if (!newContact) {
+          console.log("didnt find user in ", derivedUsersList)
+          return;
+        }
+        if (currentUserObject.userContacts.find(x => x.name == Identifier)) {
+          console.log("contact already exists")
+          return;
+        }
+        currentUserObject.userContacts.push({
+          name: newContact.userName,
+          latestMessage: "no messages",
+          numOfUnreadMessages: "0",
+          timeSinceLastMessage: "",
+          profileImagePath: newContact.profileImagePath,
+        });
+        console.log("image new contact: ", newContact.profileImagePath)
+        newContact.userContacts.push({
+          name: currentUserObject.userName,
+          latestMessage: "no messages",
+          numOfUnreadMessages: "0",
+          timeSinceLastMessage: "",
+          profileImagePath: currentUserObject.profileImagePath,
+        })
+        setCurrentContact(Identifier)
+      }
+      function changeBackground(e, color) {
+        e.target.style.background = color;
+      }
 
-// if (!localStorage.getItem("storedUsersList")){
-//   var usersList = []
-// }
-// else{
-//   var usersList = JSON.parse(localStorage.getItem("storedUsersList"));
-// }
-
-//localStorage.removeItem("storedUsersList")
-
-async function getAll() {
-  var returned
-  const r = await fetch("http://localhost:5200/api/UsersApi", {mode: 'cors'});
-  var d = r.json()
-  
-  return d
-
-}
-async function getAllMessages(contactId, userId) {
-  const r = await fetch(`http://localhost:5200/api/Contacts/${contactId}/Messages?userId=${userId}`);
-  const d = await r.json();
-  console.log(d);
-  return d
-}
-async function contactsOfUser(userId) {
-  const r = await fetch('http://localhost:5200/api/Contacts?userId=' + userId);
-  const d =await  r.json();
-  console.log(d);
-  return d;
-}
-
-
-
-
-
-/*
-if (!localStorage.getItem("storedUsersList")) {
-  derivedUsersList = usersList;
-  console.log(usersList);
-}
-else {
-  derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"));
-  console.log("derived ", derivedUsersList)
-}
-*/
-
-
-
-
-
- function Chat() {
-  var derivedUsersList
-  var currentUserName
-  var currentUserObject
-  const [allMessages, setAllMessages] = useState(null);
-  const [contacts, setContact] = useState(null);
-  useEffect( () => {
-    (async () =>{
-// Runs after the first render() lifecycle
-console.log("hi")
-    derivedUsersList = await getAll()
-    console.log("dul :", derivedUsersList);
-    var currentUserName = localStorage.getItem("userNowConnected");
-  var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.id === currentUserName) : undefined;
-  console.log("user object: ", currentUserObject)
-  
-  console.log('currentUserName: ', currentUserName);
-  if (currentUserObject) {
-    setContact(currentUserObject.contacts)
-    console.log('contacts: ', contacts);
-    
-    }})()
-    
-}, []);
-
-
-useEffect( () => {
-  (async () =>{
-// Runs after the first render() lifecycle
-
-  var messagess = await getAllMessages("yonadav", "itay")
-  console.log("messages :", messagess);
-  setAllMessages(messagess)
-
-  
-  })()
-  
-}, [contacts]);
-
-
-  console.log("what?")
-
-   /*
-  React.useEffect( () => {
-    /*(async () =>{
-// Runs after the first render() lifecycle
-derivedUsersList = await getAll();
-scrollDownMessagesBar();
-console.log("useEffect")
-  //  })()
-    
-}, []);
-*/
-
-
-
-  //derivedUsersList = JSON.parse(localStorage.getItem("storedUsersList"))
-   
-
-
-  //console.log("Chats was rendered")
-
-
-  
-
-  function AddContact(Identifier) {
-    let newContact = derivedUsersList.find(x => x.userName === Identifier);
-    if (!newContact) {
-      console.log("didnt find user in ", derivedUsersList)
-      return;
-    }
-    if (currentUserObject.userContacts.find(x => x.name == Identifier)) {
-      console.log("contact already exists")
-      return;
-    }
-    currentUserObject.userContacts.push({
-      name: newContact.userName,
-      latestMessage: "no messages",
-      numOfUnreadMessages: "0",
-      timeSinceLastMessage: "",
-      profileImagePath: newContact.profileImagePath,
-    });
-    console.log("image new contact: ", newContact.profileImagePath)
-    newContact.userContacts.push({
-      name: currentUserObject.userName,
-      latestMessage: "no messages",
-      numOfUnreadMessages: "0",
-      timeSinceLastMessage: "",
-      profileImagePath: currentUserObject.profileImagePath,
-    })
-    setCurrentContact(Identifier)
-  }
-  function changeBackground(e, color) {
-    e.target.style.background = color;
-  }
-
-  const [currentContact, setCurrentContact] = useState("");
-  const [addNewContact, setAddNewContact] = React.useState("");
-
-
-  console.log('in chats bro connectedUserName.userName: ', currentUserName);
-
-  const [count, setCount] = React.useState(0);
+      const [count, setCount] = React.useState(0);
   var sendNewMessage = () => {
     var text = document.getElementById("sendMessageBox").value;
     if (text == "") {
@@ -263,27 +151,28 @@ console.log("useEffect")
 
   };
   
-  var scrollDownMessagesBar = () => {
-    console.log("scrollscrollscrollscrollscrollscrollscrollscrollscroll  scroll");
-    document.getElementById("messagesBar").scrollTop = document.getElementById("messagesBar").scrollHeight;
+      var derivedUsersList = []
+
+    useEffect(() => {
+      console.log("hi")
+      //derivedUsersList = getAll
+    }, []);
+
     
-  };
-
-  
-  if (contacts === null ) {
-    return(<h1>waiting to load...</h1>);
-  }
-  
-  if (allMessages === null ) {
-    return(<h1>waiting for Messages...</h1>);
-  }
-  
-
-  return (<span class="d-flex justify-content-center">
+  const [currentContact, setCurrentContact] = React.useState("");
+  const [addNewContact, setAddNewContact] = React.useState("");
+    
+    var currentUserName = localStorage.getItem("userNowConnected");
+    var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.id === currentUserName) : undefined;
+    //var contacts = currentUserObject.contacts
+    var contacts = []
+    /*
+    return (<span class="d-flex justify-content-center">
     <div
       className="container border bg-light mt-5 rounded w-100"
       style={{ height: "500px" }}
     >
+    
       <div className="row h-100">
         <div className="col col-lg-4 h-100">
           <div className="row list-group-item bg-light d-flex justify-content-around">
@@ -350,7 +239,7 @@ console.log("useEffect")
 
 
 
-            {allMessages.map((message) => {
+            {currentUserObject.messages.map((message) => {
               if (message.type == "textual") {
                 if ((message.writer === currentUserName
                   || message.writer === currentContact) && (message.receiver === currentUserName ||
@@ -473,6 +362,73 @@ console.log("useEffect")
     </div>
 
   </span>);
+  */
+ return (
+    <span class="d-flex justify-content-center">
+        <div
+        className="container border bg-light mt-5 rounded w-100"
+        style={{ height: "500px" }}>
+            <div className="row h-100">
+                <div className="col col-lg-4 h-100">
+                    <div className="row list-group-item bg-light d-flex justify-content-around">
+                        <div className="ms-2 me-auto col">
+                           <div className="fw-bold">{currentUserName}</div>
+                        </div>
+                        <div className="ms-2 me-auto col col-lg-4 h end-0">
+                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                          </svg>
+                        </button>
+          
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Add A New Contact</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Contact Identifier:</label>
+                                  <input type="text" class="form-control" id="recipient-name" onChange={(e) => setAddNewContact(e.target.value)}></input>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onClick={() => { AddContact(addNewContact) }}>Add</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {console.log("contacts: ", contacts)}
+                    {console.log("List: ", derivedUsersList)}
+                    <ul className="list-group-flush col overflow-auto h-100">
+                      {
+                        contacts.map((contact) => {
+                          return <div onMouseEnter={(e) => { changeBackground(e, "LightSteelBlue") }}
+                            onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
+                              //setCurrentContact(contact.name);
+                              setCurrentContact((currentContact) => {
+                                currentContact = contact.name  // "React is awesome!"
+                                console.log('currentContact: ', currentContact);
+                                return currentContact;
+                              });
+                              var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
+                              contactX.numOfUnreadMessages = "0";
+                            }}><ContactItem contact={contact}></ContactItem></div>
+                        })
+                        }
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </span>
+ )
 }
 
-export default Chat;
+export default Chat2 

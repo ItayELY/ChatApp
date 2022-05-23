@@ -76,7 +76,7 @@ function Ajax(){
         console.log(r.json());
     }
     async function messages() {
-        const r = await fetch('/api/Contacts/itay/messages');
+        const r = await fetch('http://localhost:5200/api/Contacts/yonadav/Messages?userId=itay');
         const d = r.json();
         console.log(d);
     }
@@ -106,7 +106,7 @@ function Ajax(){
   <button onClick={contacts}>all contacts</button>
   <button onclick="contact()">contact</button>
   <button onclick="addContact()">add pal</button>
-  <button onclick="messages()">messages</button>
+  <button onClick={messages}>messages</button>
   <button onclick="addMessage()">add message</button>
 </div>
     )

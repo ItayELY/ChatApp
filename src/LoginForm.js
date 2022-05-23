@@ -3,7 +3,7 @@ import SignupForm from "./SingupForm";
 import { Link } from "react-router-dom";
 import usersList from "./users";
 import connectedUserName from "./Globals";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GlobalsContext from "./Globals";
 import React, { useContext } from 'react';
 
@@ -36,7 +36,8 @@ async function validiate() {
   //verification:
   var currentUserObject = responseJson;
 
-  
+  console.log("hello")
+
   if (currentUserObject.password == PasswordFromForm) {
     console.log("verified");
     var userNameConnected = currentUserObject.id;
@@ -52,9 +53,10 @@ async function validiate() {
     }
   
 
+    console.log("hello")
 
     var jsonOfUsers = await getAll();
-
+    console.log("hello")
     window.location.href = "/./chats";
     localStorage.setItem("storedUsersList", JSON.stringify(jsonOfUsers))
 
@@ -65,7 +67,9 @@ async function validiate() {
 
 
 function LoginForm() {
-
+  useEffect(() => {
+    console.log("useEffect")
+  }, []);
   return (
     <span className="d-flex justify-content-center">
 

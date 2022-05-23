@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import usersList from './users.js';
 
@@ -35,6 +36,7 @@ var getImageInput = () => {
 };
 
 function signUp() {
+  
     var _userName = document.getElementById("inputUsername").value;
     console.log(' _userName: , image:', _userName, userImage);
     if(_userName == ""){
@@ -74,7 +76,9 @@ function signUp() {
 
 function SignupForm() {
 
-
+  useEffect(() => {
+    console.log("useEffect")
+  }, []);
     return ( <span className = "d-flex justify-content-center" >
         <form className = "row g-3 border border-0 bg-light mt-5 mb-2 rounded" >
           <div className = "row-auto" >

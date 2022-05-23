@@ -7,10 +7,12 @@ import Ajax from './Ajax';
 import GeneralBackround from './GeneralBackround';
 import SignupForm from './SingupForm';
 import Chat from './Chat';
+
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import Shtusel from './Shtusel';
 import usersList from './users';
 import TakeSelfie from './TakeSelfie';
+import Chat2 from './Chat2';
 
 
 // //Global Variables
