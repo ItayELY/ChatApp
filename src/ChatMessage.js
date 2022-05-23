@@ -6,8 +6,8 @@ import Message from "./Message";
 function ChatMessage({ message, sentByCurrentUser }) {
     var renderImageMessage = ()=>{
         return(
-            <div class="font-weight-bold mb-1 ">from {message.writer}<br></br>
-                            <img src= {message.text}/>
+            <div class="font-weight-bold mb-1 ">from {message.sentBy}<br></br>
+                            <img src= {message.content}/>
                         </div>
         )
     }
@@ -39,12 +39,12 @@ function ChatMessage({ message, sentByCurrentUser }) {
             <div class="d-inline-flex p-2  d-flex flex-column">
                 <div class="">
                     <div class="text-muted small text-nowrap p2">
-                        sent at {String(message.time)}
+                        sent at {String(message.created)}
                     </div>
                 </div>
                 <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2" style={{ backgroundColor: "lightgreen" }}>
-                    <div class="font-weight-bold mb-1 ">from {message.writer}<br></br>
-                        {message.text}
+                    <div class="font-weight-bold mb-1 ">from {message.sentBy}<br></br>
+                        {message.content}
                     </div>
 
                 </div>
@@ -59,12 +59,12 @@ function ChatMessage({ message, sentByCurrentUser }) {
             <div class="d-inline-flex p-2 d-flex flex-column">
                 <div class="">
                     <div class="text-muted small text-nowrap p2">
-                        sent at {String(message.time)}
+                        sent at {String(message.created)}
                     </div>
                 </div>
                 <div class="flex-shrink-1 rounded py-2 px-3 ml-3 p2 " style={{ backgroundColor: "cadetBlue" }} >
                     <div class="font-weight-bold mb-1 ">from
-                        {message.writer}<br></br>{message.text}</div>
+                        {message.sentBy}<br></br>{message.content}</div>
 
                 </div>
             </div>

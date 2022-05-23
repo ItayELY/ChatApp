@@ -69,6 +69,8 @@ else {
   var currentUserObject
   const [allMessages, setAllMessages] = useState(null);
   const [contacts, setContact] = useState(null);
+  const [currentContact, setCurrentContact] = useState("");
+  const [addNewContact, setAddNewContact] = React.useState("");
   useEffect( () => {
     (async () =>{
 // Runs after the first render() lifecycle
@@ -92,15 +94,22 @@ console.log("hi")
 useEffect( () => {
   (async () =>{
 // Runs after the first render() lifecycle
-
-  var messagess = await getAllMessages("yonadav", "itay")
-  console.log("messages :", messagess);
+  if(currentContact === ''){
+    var messagess = await getAllMessages("perki", "yonadav")
+  console.log("messages yoo pee doo :", messagess);
   setAllMessages(messagess)
+  }
+  else{
+    var messagess = await getAllMessages(currentContact, "yonadav")
+  console.log("messages yoo pee doo :", messagess);
+  setAllMessages(messagess)
+  }
+  
 
   
   })()
   
-}, [contacts]);
+}, [currentContact, contacts]);
 
 
   console.log("what?")
@@ -159,8 +168,7 @@ console.log("useEffect")
     e.target.style.background = color;
   }
 
-  const [currentContact, setCurrentContact] = useState("");
-  const [addNewContact, setAddNewContact] = React.useState("");
+
 
 
   console.log('in chats bro connectedUserName.userName: ', currentUserName);
@@ -329,12 +337,14 @@ console.log("useEffect")
                   onMouseLeave={(e) => { changeBackground(e, "white") }} onClick={() => {
                     //setCurrentContact(contact.name);
                     setCurrentContact((currentContact) => {
-                      currentContact = contact.name  // "React is awesome!"
+                      currentContact = contact.id  // "React is awesome!"
                       console.log('currentContact: ', currentContact);
                       return currentContact;
                     });
-                    var contactX = currentUserObject.userContacts.find(x => x.name === currentContact);
+                    /*
+                    var contactX = contacts.find(x => x.name === currentContact);
                     contactX.numOfUnreadMessages = "0";
+                    */
                   }}><ContactItem contact={contact}></ContactItem></div>
               })
               }
@@ -351,32 +361,25 @@ console.log("useEffect")
 
 
             {allMessages.map((message) => {
-              if (message.type == "textual") {
-                if ((message.writer === currentUserName
-                  || message.writer === currentContact) && (message.receiver === currentUserName ||
-                    message.receiver === currentContact))
-                  return <ChatMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatMessage>
-              }
+            //  if (message.type == "textual") {
+                
+                  return <ChatMessage className="align-self-end " message={message} sentByCurrentUser={message.sent} align={"align-content-end"}></ChatMessage>
+             // }
+              /*
               else if (message.type == "image") {
-                if ((message.writer === currentUserName
-                  || message.writer === currentContact) && (message.receiver === currentUserName ||
-                    message.receiver === currentContact))
+                
                   return <ChatImageMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatImageMessage>
               }
 
               else if (message.type == "audio") {
-                if ((message.writer === currentUserName
-                  || message.writer === currentContact) && (message.receiver === currentUserName ||
-                    message.receiver === currentContact))
+                
                   return <ChatAudioMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatAudioMessage>
               }
               else if (message.type == "video") {
-                if ((message.writer === currentUserName
-                  || message.writer === currentContact) && (message.receiver === currentUserName ||
-                    message.receiver === currentContact))
+                
                   return <ChatVideoMessage className="align-self-end " message={message} sentByCurrentUser={message.writer === currentUserName ? true : false} align={"align-content-end"}></ChatVideoMessage>
               }
-              
+              */
 
 
             })}
