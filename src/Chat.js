@@ -123,7 +123,7 @@ useEffect( () => {
   
   })()
   
-}, [currentContact, contacts]);
+}, [currentContact, contacts, allMessages]);
 
 
 
@@ -349,7 +349,7 @@ console.log("useEffect")
         <div className="col col-lg-4 h-100">
           <div className="row list-group-item bg-light d-flex justify-content-around">
             <div className="ms-2 me-auto col">
-              <div className="fw-bold">{currentUserName}</div>
+              <div className="fw-bold">{currentUserObject.id}</div>
             </div>
             <div className="ms-2 me-auto col col-lg-4 h end-0">
               <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop">

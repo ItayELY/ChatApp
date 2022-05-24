@@ -35,7 +35,7 @@ var getImageInput = () => {
 
 };
 
-function signUp() {
+async function signUp() {
   
     var _userName = document.getElementById("inputUsername").value;
     console.log(' _userName: , image:', _userName, userImage);
@@ -62,15 +62,21 @@ function signUp() {
       return;
     }
 
-    usersList.push({
-        userName: _userName,
-        password: _password,
-        displayName: _displayName,
-        userContacts: [],
-        messages: [],
-        profileImagePath: userImage
-    });
-    localStorage.setItem("storedUsersList", JSON.stringify(usersList))
+    const r = await fetch('http://localhost:5200/api/Register', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({ id: _userName, name: _displayName, password: _password}) // body data type must match "Content-Type" header
+  });
+    //localStorage.setItem("storedUsersList", JSON.stringify(usersList))
+    window.location.href = "/./login";
 
 };
 
