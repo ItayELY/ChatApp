@@ -37,6 +37,8 @@ async function getAllMessages(contactId, userId) {
   console.log(d);
   return d
 }
+
+
 async function contactsOfUser(userId) {
   const r = await fetch('http://localhost:5200/api/Contacts?userId=' + userId);
   const d =await  r.json();
@@ -64,9 +66,9 @@ else {
 
 
  function Chat() {
-  var derivedUsersList
+  const [derivedUsersList, setDerivedUsersList] = useState(null)
   var currentUserName
-  var currentUserObject
+  const [currentUserObject, setCurrentUserObject] = useState(null)
   const [allMessages, setAllMessages] = useState(null);
   const [contacts, setContact] = useState(null);
   const [currentContact, setCurrentContact] = useState("");
@@ -75,44 +77,56 @@ else {
     (async () =>{
 // Runs after the first render() lifecycle
 console.log("hi")
-    derivedUsersList = await getAll()
-    console.log("dul :", derivedUsersList);
-    var currentUserName = localStorage.getItem("userNowConnected");
-  var currentUserObject =  Array.isArray(derivedUsersList) ? derivedUsersList.find(x => x.id === currentUserName) : undefined;
-  console.log("user object: ", currentUserObject)
+      var all = await getAll()
+      console.log(all)
+    setDerivedUsersList(all)
   
-  console.log('currentUserName: ', currentUserName);
+})()
+}, []);
+useEffect(() => {
+  (async () => {
+    console.log("dul :", derivedUsersList);
+    currentUserName = localStorage.getItem("userNowConnected");
+    var obj = derivedUsersList.find(x => x.id === currentUserName)
+    console.log("obj: ", obj)
+  setCurrentUserObject(obj);
+  })() 
+  
+}, [derivedUsersList]);
+
+useEffect(() => {
+  (async () =>{
+  console.log("user object: ", currentUserObject)
   if (currentUserObject) {
     setContact(currentUserObject.contacts)
-    console.log('contacts: ', contacts);
     
-    }})()
     
-}, []);
+    }
+})()}, [currentUserObject]);
+
+useEffect(() => {
+  console.log("contacts: ", contacts)
+  
+}, [contacts]);
 
 
 useEffect( () => {
   (async () =>{
 // Runs after the first render() lifecycle
   if(currentContact === ''){
-    var messagess = await getAllMessages("perki", "yonadav")
-  console.log("messages yoo pee doo :", messagess);
-  setAllMessages(messagess)
+    setAllMessages(await getAllMessages("perki", "yonadav"))
   }
   else{
-    var messagess = await getAllMessages(currentContact, "yonadav")
-  console.log("messages yoo pee doo :", messagess);
-  setAllMessages(messagess)
-  }
-  
 
+  setAllMessages(await getAllMessages(currentContact, currentUserObject.id))
+  }
   
   })()
   
 }, [currentContact, contacts]);
 
 
-  console.log("what?")
+
 
    /*
   React.useEffect( () => {
@@ -135,7 +149,43 @@ console.log("useEffect")
   //console.log("Chats was rendered")
 
 
-  
+  async function addContact(cid, cname, cserver, uid) {
+    // const d = new Date
+     const r = await fetch(`http://localhost:5200/api/contacts/${cid}?userId=${uid}`, {
+         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+         mode: 'cors', // no-cors, *cors, same-origin
+         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+         credentials: 'same-origin', // include, *same-origin, omit
+         headers: {
+             'Content-Type': 'application/json'
+             // 'Content-Type': 'application/x-www-form-urlencoded',
+         },
+         redirect: 'follow', // manual, *follow, error
+         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+         body: JSON.stringify({id: cid, name: cname, server: cserver }) // body data type must match "Content-Type" header
+     });
+ }
+ async function sendNewMessage(cid,  uid) {
+  var mcontent = document.getElementById("sendMessageBox").value;
+  if (mcontent == "") {
+    return
+  }
+  console.log(mcontent)
+
+  const r = await fetch(`http://localhost:5200/api/contacts/${cid}/Messages?userId=${uid}`, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(mcontent)  // body data type must match "Content-Type" header
+});
+}
 
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);
@@ -171,9 +221,8 @@ console.log("useEffect")
 
 
 
-  console.log('in chats bro connectedUserName.userName: ', currentUserName);
-
   const [count, setCount] = React.useState(0);
+  /*
   var sendNewMessage = () => {
     var text = document.getElementById("sendMessageBox").value;
     if (text == "") {
@@ -200,6 +249,7 @@ console.log("useEffect")
     });
 
   };
+  */
 
   var sendNewMessageByEnterKey = (event) => {
     if (event.keyCode === 13) {
@@ -277,11 +327,14 @@ console.log("useEffect")
     
   };
 
-  
-  if (contacts === null ) {
-    return(<h1>waiting to load...</h1>);
+  if (currentUserObject === null ) {
+    return(<h1>waiting for object...</h1>);
   }
-  
+
+  if (contacts === null ) {
+    return(<h1>waiting for contacts...</h1>);
+  }
+
   if (allMessages === null ) {
     return(<h1>waiting for Messages...</h1>);
   }
@@ -321,7 +374,7 @@ console.log("useEffect")
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" onClick={() => { AddContact(addNewContact) }}>Add</button>
+                      <button type="button" class="btn btn-primary" onClick={() => { addContact(addNewContact, addNewContact, "localhost:5200", currentUserObject.id) }}>Add</button>
                     </div>
                   </div>
                 </div>
@@ -449,7 +502,7 @@ console.log("useEffect")
               </a></li>
             </ul>
             <input id="sendMessageBox" type="text" className="form-control" aria-label="Text input with segmented dropdown button" onKeyUp={sendNewMessageByEnterKey} />
-            <button type="button" className="btn btn-secondary " onClick={sendNewMessage}>
+            <button type="button" className="btn btn-secondary " onClick={() => {sendNewMessage(currentContact, currentUserObject.id)}}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                 <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
               </svg>
