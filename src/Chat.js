@@ -12,6 +12,7 @@ import TakeSelfie from "./TakeSelfie";
 import AudioRecorder from "./AudioRecorder";
 import ChatAudioMessage from "./ChatAudioMessage";
 import ChatVideoMessage from "./ChatVideoMessage";
+import { HubConnectionBuilder } from '@microsoft/signalr';
 
 
 // if (!localStorage.getItem("storedUsersList")){
@@ -49,7 +50,6 @@ async function contactsOfUser(userId) {
 
 
 
-
 /*
 if (!localStorage.getItem("storedUsersList")) {
   derivedUsersList = usersList;
@@ -66,6 +66,17 @@ else {
 
 
  function Chat() {
+  async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+  };
+ 
+  
   const [derivedUsersList, setDerivedUsersList] = useState(null)
   var currentUserName
   const [currentUserObject, setCurrentUserObject] = useState(null)
@@ -73,16 +84,63 @@ else {
   const [contacts, setContact] = useState(null);
   const [currentContact, setCurrentContact] = useState("");
   const [addNewContact, setAddNewContact] = React.useState("");
+  const [ connection, setConnection ] = useState(null);
+  const [connected, setConnected] = useState(null)
+  const [updateMessages, setUpdateMessages] = useState(0)
+
+  useEffect(()=>{
+    (async () => {
+    console.log("what? recieved: ", updateMessages)
+    if(updateMessages > 0){
+        console.log("recieved2, ", updateMessages)
+      setAllMessages(await getAllMessages(currentContact, currentUserObject.id))
+      console.log("amsgs: ", allMessages)
+    }
+    
+ })()}, [updateMessages])
+
   useEffect( () => {
     (async () =>{
+      const newConnection = new HubConnectionBuilder()
+            .withUrl('http://localhost:5200/Hubs/ChatHub')
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
 // Runs after the first render() lifecycle
 console.log("hi")
       var all = await getAll()
       console.log(all)
     setDerivedUsersList(all)
-  
+    
 })()
 }, []);
+
+useEffect(() => {
+  (async ()=> {
+  if (connection) {
+    await start()
+      console.log('Connected!');   
+      setConnected(true)
+      connection.on('ReceiveMessage', message => {
+       
+        console.log("recieved, ", updateMessages)
+        
+        setUpdateMessages((updateMessages) => {
+          updateMessages = updateMessages + 1 // "React is awesome!"
+    
+          return updateMessages;
+        })
+      })
+
+     } 
+  
+   
+       
+ })()
+}, [connection]);
+
+
 useEffect(() => {
   (async () => {
     console.log("dul :", derivedUsersList);
@@ -123,7 +181,7 @@ useEffect( () => {
   
   })()
   
-}, [currentContact, contacts, allMessages]);
+}, [currentContact, contacts ]);
 
 
 
@@ -171,8 +229,9 @@ console.log("useEffect")
     return
   }
   console.log(mcontent)
-
-  const r = await fetch(`http://localhost:5200/api/contacts/${cid}/Messages?userId=${uid}`, {
+  console.log(currentContact)
+  console.log(currentUserObject.id)
+  const r = await fetch(`http://localhost:5200/api/contacts/${currentContact}/Messages?userId=${currentUserObject.id}`, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -184,8 +243,24 @@ console.log("useEffect")
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(mcontent)  // body data type must match "Content-Type" header
+
+    
 });
+ 
+//if (connection.connectionStarted) {
+  try {
+      await connection.send('SendMessage', "messageSent");
+      console.log("ok")
+  }
+  catch(e) {
+      console.log(e);
+  }
+//}
+//else {
+//  alert('No connection to server yet.');
+//}
 }
+
 
   function AddContact(Identifier) {
     let newContact = derivedUsersList.find(x => x.userName === Identifier);
@@ -337,6 +412,9 @@ console.log("useEffect")
 
   if (allMessages === null ) {
     return(<h1>waiting for Messages...</h1>);
+  }
+  if (connection == null || connected == null) {
+    return(<h1>waiting for connection...</h1>);
   }
   
 
