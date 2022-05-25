@@ -172,7 +172,7 @@ useEffect( () => {
   (async () =>{
 // Runs after the first render() lifecycle
   if(currentContact === ''){
-    setAllMessages(await getAllMessages("perki", "yonadav"))
+    setAllMessages([])
   }
   else{
 
