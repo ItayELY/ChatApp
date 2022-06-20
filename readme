@@ -1,6 +1,8 @@
 This is a chat messaging app, built as an 
 assignment for the course Algorithmic Programming 2.
 
+!!! The last relevant commit for ex1 is at https://github.com/ItayELY/ChatApp/commit/6825eea7dad6a3833eadf80819a0e1ab83548b5c !!!
+
 As you run the project through npm, the login
 Screen will appear, with an option to register.
 
@@ -12,7 +14,7 @@ Then, the Chats screen will appear. You can add
 new contacts(if they exist- Yonadav, Hemi Leibowitz, Itay, Elon Musk, adsa), and send messages to your contacts.
 
 By clicking on the toggle bar you can record yourself and send the audio, 
-take picture of yourself and send the image, as well as send existing images and videos from you computer.
+take picture of yourself and send the image, as well as send existing images and videos from you compute
 
 
                                    /--\
